@@ -2,7 +2,9 @@
 <html lang="en">
   <?php 
   require_once('conexao/conexao.php');
-  $sql = mysqli_query($conexao, "SELECT * FROM usuario where id ='1'");
+  $sql = mysqli_query($conexao, "SELECT id FROM usuario where id ='1'");
+  session_start();
+
   ?>
 <head>
   <meta charset="utf-8">
@@ -180,7 +182,7 @@
           <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block"><?php echo $_SESSION['nome_usuario']; ?></a>
         </div>
       </div>
 
@@ -846,7 +848,14 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Dashboard v2</h1>
+            <h1 class="m-0">Dashboard v2 te <?php
+            //trazer dadis do select
+            if (mysqli_num_rows($sql) > 0){
+                while($rowData = mysqli_fetch_assoc($sql)){
+                    echo $rowData["id"];
+                }
+            }
+            ?> </h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
